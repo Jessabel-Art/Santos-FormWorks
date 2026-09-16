@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 20
     env:
       NEXT_TELEMETRY_DISABLED: "1"
-      DEPLOY_DIR: ${{ runner.temp }}/santos-formworks-deploy
+      DEPLOY_DIR: $RUNNER_TEMP/santos-formworks-deploy
 
     steps:
       - name: Check out main
