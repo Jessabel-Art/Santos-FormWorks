@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { products, categories, colors, materials } from "@/lib/products";
 import { ProductGrid } from "./product-card";
 import { SearchBar, Button } from "./ui";
 import { Icon } from "./icon";
 import { Modal } from "./modal";
+import { useStore } from "./store-provider";
 type Filters = {
   category: string;
   maxPrice: number;
@@ -19,7 +20,6 @@ const defaults: Filters = {
   materials: [],
   favoritesOnly: false,
 };
-import { useStore } from "./store-provider";
 function FilterPanel({
   value,
   onChange,
@@ -27,6 +27,7 @@ function FilterPanel({
   value: Filters;
   onChange: (value: Filters) => void;
 }) {
+  const priceId = useId();
   const toggle = (key: "colors" | "materials", item: string) =>
     onChange({
       ...value,
@@ -54,12 +55,12 @@ function FilterPanel({
       </fieldset>
       <fieldset>
         <legend>Price range</legend>
-        <label htmlFor="max-price">
+        <label htmlFor={priceId}>
           Up to ${value.maxPrice}
           {value.maxPrice === 100 ? "+" : ""}
         </label>
         <input
-          id="max-price"
+          id={priceId}
           type="range"
           min="0"
           max="100"

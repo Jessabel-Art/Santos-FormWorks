@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useId, type ReactNode } from "react";
 import { Icon } from "./icon";
 export function Modal({
   title,
@@ -13,6 +13,7 @@ export function Modal({
   drawer?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   useEffect(() => {
     const dialog = ref.current;
     const previous = document.activeElement as HTMLElement;
@@ -28,6 +29,7 @@ export function Modal({
   return (
     <dialog
       ref={ref}
+      aria-labelledby={titleId}
       className={`modal ${drawer ? "drawer" : ""}`}
       onCancel={onClose}
       onClick={(e) => {
@@ -36,7 +38,7 @@ export function Modal({
     >
       <div className="modal-inner">
         <div className="modal-heading">
-          <h2>{title}</h2>
+          <h2 id={titleId}>{title}</h2>
           <button
             className="icon-button"
             aria-label={`Close ${title}`}
